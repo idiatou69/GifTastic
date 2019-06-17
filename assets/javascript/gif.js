@@ -2,20 +2,24 @@
 // we create a variable for our Api key
 var ApiKey = "mAlVE8BvS2yqgQyRBwObgGYf9pttobR9";
 
+
 // Initial array of animals
 var animals = ["dog", "cat", "lion", "giraf","gorilla", "turtle", "mosquitos"];
 // then we loop our array of string
 for (let i = 0; i < animals.length; i++) {
   createButton(animals[i]);
 }
+
 // create a function  called createButton
 function createButton(text) {
+  if(!text)return
   var button = $("<button>");
   button.text(text);
   // we put a event click for our button
   button.on("click", function (event) {
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + text + "&api_key=" + ApiKey + "&limit=10"
 
+    $("#animals-view").empty();
     // Creates AJAX call for the specific animal button being clicked
     $.ajax({
       url: queryURL,
@@ -34,6 +38,7 @@ function createButton(text) {
         image.addClass("gif")
 
         // then  we call our div then  append it
+       
         $("#animals-view").append(image);
       }
     })
@@ -57,6 +62,6 @@ $(document).on("click", ".gif", function () {
 });
 $("#add-animal").on("click", function (event) {
   event.preventDefault();
-  createButton($("#animal-input").val());
+  createButton($("#animal-input").val().trim());
 });
 
